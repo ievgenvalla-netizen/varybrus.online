@@ -266,13 +266,11 @@
       <div class="badge-float badge-2"><div class="n">×3</div><div class="l" data-i="badge2">růst tržeb</div></div>
       <div class="photo-ring"></div>
       <div class="photo">
-        <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="photo.jpg">
-          <source src="hero.mp4" type="video/mp4">
-          <source src="hero.webm" type="video/webm">
-        </video>
+        <img id="heroImg" src="hero.png" alt="Maksym Varybrus"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="fallback" style="display:none">
           <div class="mono">MV</div>
-          <small data-i="photo_hint">Vložte hero.mp4 (nebo photo.jpg) vedle této stránky</small>
+          <small data-i="photo_hint">Vložte hero.png vedle této stránky</small>
         </div>
       </div>
     </div>
@@ -385,7 +383,7 @@ const I18N = {
     hero_sub:"Rozeberu váš byznys na detaily a zapojím marketingové hooky, které jsem nejdřív otestoval na vlastním podnikání. Žádná teorie — jen to, co funguje.",
     hero_cta1:"Domluvit konzultaci →",hero_cta2:"Podívat se na výsledky",
     badge1:"let v marketingu",badge2:"růst tržeb",
-    photo_hint:"Vložte hero.mp4 (nebo photo.jpg) vedle této stránky",
+    photo_hint:"Vložte hero.png vedle této stránky",
     mq1:"Marketingová strategie",mq2:"Rozbor byznysu",mq3:"Prodejní hooky",mq4:"Růst tržeb",
     about_eyebrow:"O mně",about_title:"Marketér, který testuje na sobě",
     about_p1:"Jsem Maksym Varybrus. Pomáhám podnikatelům vidět jejich byznys jasně — kde se ztrácí peníze a kde je skrytý potenciál růstu.",
@@ -409,7 +407,7 @@ const I18N = {
     hero_sub:"Розберу ваш бізнес по деталях і впроваджу маркетингові хуки, які спершу протестував на власній справі. Жодної теорії — лише те, що працює.",
     hero_cta1:"Замовити консультацію →",hero_cta2:"Подивитись результати",
     badge1:"років у маркетингу",badge2:"зростання виручки",
-    photo_hint:"Покладіть hero.mp4 (або photo.jpg) поряд із цією сторінкою",
+    photo_hint:"Покладіть hero.png поряд із цією сторінкою",
     mq1:"Маркетингова стратегія",mq2:"Розбір бізнесу",mq3:"Продажні хуки",mq4:"Зростання виручки",
     about_eyebrow:"Про мене",about_title:"Маркетолог, який тестує на собі",
     about_p1:"Я Максим Варибрус. Допомагаю підприємцям бачити свій бізнес чітко — де втрачаються гроші й де прихований потенціал зростання.",
@@ -433,7 +431,7 @@ const I18N = {
     hero_sub:"Разберу ваш бизнес по деталям и внедрю маркетинговые хуки, которые сначала протестировал на собственном деле. Никакой теории — только то, что работает.",
     hero_cta1:"Записаться на консультацию →",hero_cta2:"Посмотреть результаты",
     badge1:"лет в маркетинге",badge2:"рост выручки",
-    photo_hint:"Положите hero.mp4 (или photo.jpg) рядом с этой страницей",
+    photo_hint:"Положите hero.png рядом с этой страницей",
     mq1:"Маркетинговая стратегия",mq2:"Разбор бизнеса",mq3:"Продающие хуки",mq4:"Рост выручки",
     about_eyebrow:"Обо мне",about_title:"Маркетолог, который тестирует на себе",
     about_p1:"Я Максим Варибрус. Помогаю предпринимателям видеть свой бизнес ясно — где теряются деньги и где скрытый потенциал роста.",
@@ -504,18 +502,6 @@ document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',(
 
 document.getElementById('yr').textContent=new Date().getFullYear();
 
-/* ===== hero video: boomerang clip (forward+reverse baked in), native seamless loop ===== */
-(function(){
-  const v=document.getElementById('heroVideo');
-  if(!v) return;
-  const fallback=v.parentElement.querySelector('.fallback');
-  v.play().catch(()=>{});                              // some browsers need an explicit start
-  v.addEventListener('error',showFallback);
-  v.querySelectorAll('source').forEach(s=>s.addEventListener('error',()=>{
-    if(v.networkState===HTMLMediaElement.NETWORK_NO_SOURCE) showFallback();
-  }));
-  function showFallback(){ v.style.display='none'; if(fallback) fallback.style.display='flex'; }
-})();
 
 /* ===== preloader: animated % + explosion ===== */
 (function(){

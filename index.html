@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maksym Varybrus — Marketing & Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Unbounded:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* === ACCENT: PINK (default). For ORANGE, swap the two lines below === */
+    --accent:#FF2D78;          /* orange option: #FF6A1A */
+    --accent-2:#FF6FA6;        /* orange option: #FFA24A */
+    --accent-rgb:255,45,120;   /* orange option: 255,106,26 */
+
+    --bg:#070708;
+    --bg-2:#0d0d10;
+    --line:rgba(255,255,255,.08);
+    --text:#f4f4f6;
+    --muted:#9a9aa3;
+    --radius:20px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Manrope',system-ui,sans-serif;
+    background:var(--bg);color:var(--text);
+    overflow-x:hidden;line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent);color:#fff}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  h1,h2,h3,.display{font-family:'Unbounded',sans-serif;line-height:1.05;letter-spacing:-.01em}
+
+  /* ---------- animated background glow ---------- */
+  .bg-fx{position:fixed;inset:0;z-index:-2;pointer-events:none}
+  .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;
+    background:radial-gradient(circle at center,rgba(var(--accent-rgb),.9),transparent 65%)}
+  .orb.a{width:520px;height:520px;top:-120px;left:-80px;animation:float1 14s ease-in-out infinite}
+  .orb.b{width:460px;height:460px;bottom:-140px;right:-100px;opacity:.4;animation:float2 18s ease-in-out infinite}
+  @keyframes float1{50%{transform:translate(80px,60px) scale(1.1)}}
+  @keyframes float2{50%{transform:translate(-70px,-50px) scale(1.15)}}
+  .grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+  /* cursor glow */
+  .cursor-glow{position:fixed;width:380px;height:380px;border-radius:50%;z-index:-1;pointer-events:none;
+    transform:translate(-50%,-50%);transition:opacity .3s;opacity:0;
+    background:radial-gradient(circle,rgba(var(--accent-rgb),.18),transparent 60%)}
+
+  /* ---------- header ---------- */
+  header{position:fixed;top:0;left:0;right:0;z-index:50;transition:.3s;
+    backdrop-filter:blur(0px)}
+  header.scrolled{background:rgba(7,7,8,.7);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .logo{font-family:'Unbounded';font-weight:800;font-size:18px;letter-spacing:.02em}
+  .logo b{color:var(--accent)}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{font-size:14px;color:var(--muted);font-weight:600;transition:.2s}
+  .nav-links a:hover{color:var(--text)}
+  .lang{display:flex;gap:4px;background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:4px}
+  .lang button{background:none;border:0;color:var(--muted);font:inherit;font-size:12px;font-weight:700;
+    padding:5px 11px;border-radius:999px;cursor:pointer;transition:.2s;text-transform:uppercase}
+  .lang button.active{background:var(--accent);color:#fff}
+  .burger{display:none;background:none;border:0;color:#fff;cursor:pointer}
+
+  /* ---------- hero ---------- */
+  .hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 60px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:50px;align-items:center;width:100%;position:relative}
+  /* keep the headline/CTA above the video if they ever overlap */
+  .hero-grid>div:first-child{position:relative;z-index:3}
+  .hero h1,.hero p.sub{text-shadow:0 2px 24px rgba(0,0,0,.6)}
+  .tagline{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--accent);
+    text-transform:uppercase;letter-spacing:.12em;border:1px solid rgba(var(--accent-rgb),.35);
+    padding:7px 14px;border-radius:999px;margin-bottom:26px;background:rgba(var(--accent-rgb),.06)}
+  .tagline .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+  .hero h1{font-size:clamp(38px,5.6vw,68px);font-weight:900;margin-bottom:22px}
+  .hero h1 .hl{color:var(--accent);position:relative;white-space:nowrap}
+  .hero p.sub{font-size:clamp(16px,1.6vw,19px);color:var(--muted);max-width:520px;margin-bottom:34px}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:15px;
+    padding:15px 26px;border-radius:999px;cursor:pointer;transition:.25s;border:1px solid transparent}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 30px rgba(var(--accent-rgb),.45)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(var(--accent-rgb),.6)}
+  .btn-ghost{border-color:var(--line);color:var(--text);background:rgba(255,255,255,.02)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px)}
+
+  /* photo */
+  .photo-wrap{position:relative;justify-self:center;z-index:1}
+  .photo-ring{position:absolute;inset:-3px;border-radius:26px;z-index:0;
+    background:conic-gradient(from 0deg,var(--accent),transparent 35%,var(--accent-2) 60%,transparent 80%,var(--accent));
+    filter:blur(2px);opacity:.9;animation:spin 8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .photo{position:relative;z-index:1;width:min(620px,92vw);aspect-ratio:1/1;border-radius:24px;overflow:hidden;
+    background:linear-gradient(180deg,#1a1a1f,#0a0a0c);border:1px solid var(--line);
+    box-shadow:0 30px 80px rgba(0,0,0,.7)}
+  .photo img,.photo video{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(.15) contrast(1.05)}
+  .photo .fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:10px;color:var(--muted);font-family:'Unbounded';text-align:center;padding:20px}
+  .photo .fallback .mono{font-size:64px;font-weight:900;color:var(--accent)}
+  .photo .fallback small{font-size:11px;letter-spacing:.05em;font-family:'Manrope';font-weight:600}
+  .badge-float{position:absolute;z-index:2;background:rgba(13,13,16,.9);border:1px solid var(--line);
+    backdrop-filter:blur(8px);border-radius:14px;padding:12px 16px;box-shadow:0 12px 30px rgba(0,0,0,.5)}
+  .badge-float .n{font-family:'Unbounded';font-weight:800;font-size:22px;color:var(--accent)}
+  .badge-float .l{font-size:11px;color:var(--muted);font-weight:600}
+  .badge-1{bottom:24px;left:-26px;animation:bob 4s ease-in-out infinite}
+  .badge-2{top:30px;right:-26px;animation:bob 4s ease-in-out infinite .8s}
+  @keyframes bob{50%{transform:translateY(-10px)}}
+
+  /* marquee */
+  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;
+    overflow:hidden;white-space:nowrap;margin-top:40px;background:var(--bg-2)}
+  .marquee-track{display:inline-flex;gap:48px;will-change:transform}
+  .marquee span{font-family:'Unbounded';font-weight:700;font-size:18px;color:var(--muted);white-space:nowrap}
+  .marquee span b{color:var(--accent)}
+
+  /* section base */
+  section{padding:100px 0;position:relative}
+  .eyebrow{color:var(--accent);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.14em;margin-bottom:14px}
+  .sec-title{font-size:clamp(28px,4vw,46px);font-weight:800;margin-bottom:18px}
+  .sec-lead{color:var(--muted);max-width:600px;font-size:17px}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .about-text p{color:var(--muted);font-size:17px;margin-top:18px}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .stat{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:.3s}
+  .stat:hover{border-color:rgba(var(--accent-rgb),.5);transform:translateY(-4px)}
+  .stat .num{font-family:'Unbounded';font-weight:900;font-size:40px;color:var(--accent)}
+  .stat .lab{color:var(--muted);font-size:14px;font-weight:600;margin-top:6px}
+
+  /* services */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:50px}
+  .card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:32px;
+    position:relative;overflow:hidden;transition:.35s}
+  .card::before{content:"";position:absolute;inset:0;opacity:0;transition:.35s;
+    background:radial-gradient(circle at top right,rgba(var(--accent-rgb),.14),transparent 60%)}
+  .card:hover{transform:translateY(-6px);border-color:rgba(var(--accent-rgb),.5)}
+  .card:hover::before{opacity:1}
+  .card .ic{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+    background:rgba(var(--accent-rgb),.12);color:var(--accent);margin-bottom:20px;font-size:24px;position:relative;z-index:1}
+  .card h3{font-size:20px;font-weight:800;margin-bottom:10px;position:relative;z-index:1}
+  .card p{color:var(--muted);font-size:15px;position:relative;z-index:1}
+
+  /* cases */
+  .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:50px}
+  .case{background:linear-gradient(180deg,var(--bg-2),var(--bg));border:1px solid var(--line);
+    border-radius:var(--radius);padding:30px;transition:.35s}
+  .case:hover{transform:translateY(-6px);border-color:rgba(var(--accent-rgb),.5)}
+  .case .big{font-family:'Unbounded';font-weight:900;font-size:46px;color:var(--accent);line-height:1}
+  .case .t{font-weight:800;font-size:17px;margin:14px 0 8px}
+  .case .d{color:var(--muted);font-size:14px}
+
+  /* contact */
+  .contact-card{background:linear-gradient(135deg,rgba(var(--accent-rgb),.16),var(--bg-2));
+    border:1px solid rgba(var(--accent-rgb),.3);border-radius:30px;padding:60px;text-align:center;position:relative;overflow:hidden}
+  .contact-card h2{font-size:clamp(28px,4vw,44px);font-weight:900;margin-bottom:16px}
+  .contact-card p{color:var(--muted);font-size:18px;max-width:520px;margin:0 auto 36px}
+  .contact-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .clink{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.04);
+    border:1px solid var(--line);border-radius:999px;padding:14px 24px;font-weight:700;font-size:15px;transition:.25s}
+  .clink:hover{background:var(--accent);border-color:var(--accent);color:#fff;transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(var(--accent-rgb),.4)}
+  .clink svg{width:20px;height:20px}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:40px 0;text-align:center;color:var(--muted);font-size:14px}
+  .footer-socials{display:flex;gap:16px;justify-content:center;margin-bottom:20px}
+  .footer-socials a{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;transition:.25s}
+  .footer-socials a:hover{background:var(--accent);border-color:var(--accent);color:#fff;transform:translateY(-3px)}
+  .footer-socials svg{width:20px;height:20px}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(30px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- preloader (clean fade reveal) ---------- */
+  body.loading{overflow:hidden}
+  #loader{position:fixed;inset:0;z-index:9999;background:#070708;
+    transition:opacity .9s ease,transform .9s ease}
+  #loader.out{opacity:0;transform:scale(1.04);pointer-events:none}
+  .load-content{position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:30px}
+  .load-name{font-family:'Unbounded';font-weight:800;font-size:clamp(20px,3vw,30px);letter-spacing:.04em;
+    opacity:0;animation:fadeUp .8s .2s forwards}
+  .load-name b{color:var(--accent)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .load-pct{font-family:'Unbounded';font-weight:900;font-size:clamp(64px,16vw,150px);line-height:1;
+    color:#fff;position:relative;animation:pctBreath 2.6s ease-in-out infinite}
+  @keyframes pctBreath{0%,100%{text-shadow:0 0 30px rgba(var(--accent-rgb),.35);transform:scale(1)}
+    50%{text-shadow:0 0 60px rgba(var(--accent-rgb),.7);transform:scale(1.03)}}
+  .load-pct .sym{color:var(--accent);font-size:.4em;vertical-align:super}
+  .load-bar{width:min(360px,72vw);height:4px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
+  .load-bar i{display:block;height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 0 18px var(--accent)}
+  .load-hint{font-size:12px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase}
+
+  /* responsive */
+  @media(max-width:900px){
+    .hero-grid,.about-grid{grid-template-columns:1fr;gap:40px}
+    .photo-wrap{order:-1}
+    .cards,.cases{grid-template-columns:1fr}
+    .nav-links{display:none}
+    .nav-links.mobile-open{display:flex;position:absolute;top:72px;left:0;right:0;flex-direction:column;
+      background:rgba(7,7,8,.97);padding:24px;border-bottom:1px solid var(--line)}
+    .burger{display:block}
+    .contact-card{padding:40px 24px}
+  }
+</style>
+</head>
+<body class="loading">
+
+<!-- PRELOADER -->
+<div id="loader">
+  <div class="load-content">
+    <div class="load-name">Maksym <b>Varybrus</b></div>
+    <div class="load-pct"><span id="pct">0</span><span class="sym">%</span></div>
+    <div class="load-bar"><i id="bar"></i></div>
+    <div class="load-hint" data-i="load_hint">Načítání</div>
+  </div>
+</div>
+
+<div class="bg-fx"><div class="orb a"></div><div class="orb b"></div></div>
+<div class="grain"></div>
+<div class="cursor-glow" id="cglow"></div>
+
+<header id="header">
+  <div class="wrap nav">
+    <div class="logo">Maksym <b>Varybrus</b></div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about" data-i="nav_about">O mně</a>
+      <a href="#services" data-i="nav_services">Služby</a>
+      <a href="#cases" data-i="nav_cases">Výsledky</a>
+      <a href="#contact" data-i="nav_contact">Kontakt</a>
+    </nav>
+    <div style="display:flex;gap:12px;align-items:center">
+      <div class="lang">
+        <button data-lang="cs" class="active">CS</button>
+        <button data-lang="uk">UA</button>
+        <button data-lang="ru">RU</button>
+      </div>
+      <button class="burger" id="burger" aria-label="menu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <span class="tagline"><span class="dot"></span><span data-i="hero_tag">Marketing · Rozbor byznysu</span></span>
+      <h1 data-i="hero_h1">Proměňuji byznys v <span class="hl">stroj na zisk</span> pomocí ověřených hooků</h1>
+      <p class="sub" data-i="hero_sub">Rozeberu váš byznys na detaily a zapojím marketingové hooky, které jsem nejdřív otestoval na vlastním podnikání. Žádná teorie — jen to, co funguje.</p>
+      <div class="cta-row">
+        <a href="#contact" class="btn btn-primary" data-i="hero_cta1">Domluvit konzultaci →</a>
+        <a href="#cases" class="btn btn-ghost" data-i="hero_cta2">Podívat se na výsledky</a>
+      </div>
+    </div>
+    <div class="photo-wrap reveal in">
+      <div class="badge-float badge-1"><div class="n">10+</div><div class="l" data-i="badge1">let v marketingu</div></div>
+      <div class="badge-float badge-2"><div class="n">×3</div><div class="l" data-i="badge2">růst tržeb</div></div>
+      <div class="photo-ring"></div>
+      <div class="photo">
+        <video id="heroVideo" autoplay muted playsinline preload="auto" poster="photo.jpg">
+          <source src="hero.mp4" type="video/mp4">
+          <source src="hero.webm" type="video/webm">
+        </video>
+        <div class="fallback" style="display:none">
+          <div class="mono">MV</div>
+          <small data-i="photo_hint">Vložte hero.mp4 (nebo photo.jpg) vedle této stránky</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track" id="mq">
+    <span data-i="mq1">Marketingová strategie</span><span style="color:var(--accent)">·</span>
+    <span data-i="mq2">Rozbor byznysu</span><span style="color:var(--accent)">·</span>
+    <span data-i="mq3">Prodejní hooky</span><span style="color:var(--accent)">·</span>
+    <span data-i="mq4">Růst tržeb</span><span style="color:var(--accent)">·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-text reveal">
+      <div class="eyebrow" data-i="about_eyebrow">O mně</div>
+      <h2 class="sec-title" data-i="about_title">Marketér, který testuje na sobě</h2>
+      <p data-i="about_p1">Jsem Maksym Varybrus. Pomáhám podnikatelům vidět jejich byznys jasně — kde se ztrácí peníze a kde je skrytý potenciál růstu.</p>
+      <p data-i="about_p2">Každý hook a každou strategii nejdřív zkouším na vlastním podnikání. Doporučuji jen to, co reálně přineslo výsledky. Žádné prázdné sliby.</p>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><div class="num">120+</div><div class="lab" data-i="stat1">rozebraných byznysů</div></div>
+      <div class="stat"><div class="num">×3</div><div class="lab" data-i="stat2">průměrný růst tržeb</div></div>
+      <div class="stat"><div class="num">10+</div><div class="lab" data-i="stat3">let praxe</div></div>
+      <div class="stat"><div class="num">100%</div><div class="lab" data-i="stat4">ověřeno v praxi</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow" data-i="serv_eyebrow">Co dělám</div>
+      <h2 class="sec-title" data-i="serv_title">Služby</h2>
+      <p class="sec-lead" data-i="serv_lead">Komplexní práce s marketingem — od hloubkového rozboru po konkrétní hooky, které zvyšují zisk.</p>
+    </div>
+    <div class="cards">
+      <div class="card reveal"><div class="ic">🔍</div><h3 data-i="serv1_t">Rozbor byznysu</h3><p data-i="serv1_d">Hluboká analýza vašeho podnikání: trychtýř, ceny, publikum a body, kde unikají peníze.</p></div>
+      <div class="card reveal"><div class="ic">🪝</div><h3 data-i="serv2_t">Marketingové hooky</h3><p data-i="serv2_d">Zapojení prodejních a obsahových hooků, otestovaných na reálných projektech a mém byznysu.</p></div>
+      <div class="card reveal"><div class="ic">📈</div><h3 data-i="serv3_t">Strategie růstu</h3><p data-i="serv3_d">Jasný plán, jak zvýšit tržby — krok za krokem, s metrikami a kontrolou výsledku.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="cases">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow" data-i="case_eyebrow">Výsledky</div>
+      <h2 class="sec-title" data-i="case_title">Čísla, která mluví</h2>
+      <p class="sec-lead" data-i="case_lead">Hooky otestované na mém byznysu, které pak fungovaly i u klientů.</p>
+    </div>
+    <div class="cases">
+      <div class="case reveal"><div class="big">+212%</div><div class="t" data-i="case1_t">Konverze webu</div><div class="d" data-i="case1_d">Po přepracování nabídky a zapojení hlavního hooku na landing page.</div></div>
+      <div class="case reveal"><div class="big">×3,4</div><div class="t" data-i="case2_t">Tržby za 4 měsíce</div><div class="d" data-i="case2_d">Rozbor trychtýře + nový prodejní scénář na vlastním projektu.</div></div>
+      <div class="case reveal"><div class="big">−38%</div><div class="t" data-i="case3_t">Cena za lead</div><div class="d" data-i="case3_d">Optimalizace obsahových hooků a cílení publika.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-card reveal">
+      <div class="orb a" style="opacity:.25;top:-100px;right:-60px;left:auto"></div>
+      <h2 data-i="contact_title">Pojďme rozebrat váš byznys</h2>
+      <p data-i="contact_lead">Napište mi do Telegramu nebo zavolejte. Řeknu rovnou, kde je váš růstový potenciál.</p>
+      <div class="contact-links">
+        <a class="clink" href="https://t.me/VarybrusMaksym" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.5 18.6 20c-.25 1.11-.92 1.38-1.86.86l-5.14-3.79-2.48 2.39c-.27.27-.5.5-1.03.5l.37-5.22 9.5-8.58c.41-.37-.09-.57-.64-.2L5.07 13.12 0 11.53c-1.1-.34-1.12-1.1.23-1.63L20.52 2.9c.91-.34 1.71.22 1.42 1.6Z"/></svg>
+          @VarybrusMaksym
+        </a>
+        <a class="clink" href="tel:+420776364466">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+          +420 776 364 466
+        </a>
+        <a class="clink" href="https://instagram.com/" target="_blank" rel="noopener" id="igLink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-socials">
+      <a href="https://t.me/VarybrusMaksym" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.5 18.6 20c-.25 1.11-.92 1.38-1.86.86l-5.14-3.79-2.48 2.39c-.27.27-.5.5-1.03.5l.37-5.22 9.5-8.58c.41-.37-.09-.57-.64-.2L5.07 13.12 0 11.53c-1.1-.34-1.12-1.1.23-1.63L20.52 2.9c.91-.34 1.71.22 1.42 1.6Z"/></svg></a>
+      <a href="tel:+420776364466" aria-label="Phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg></a>
+      <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+    </div>
+    <div>© <span id="yr"></span> Maksym Varybrus · <span data-i="footer_rights">Marketing & rozbor byznysu</span></div>
+  </div>
+</footer>
+
+<script>
+/* ===== i18n ===== */
+const I18N = {
+  cs:{
+    nav_about:"O mně",nav_services:"Služby",nav_cases:"Výsledky",nav_contact:"Kontakt",
+    hero_tag:"Marketing · Rozbor byznysu",
+    hero_h1:'Proměňuji byznys v <span class="hl">stroj na zisk</span> pomocí ověřených hooků',
+    hero_sub:"Rozeberu váš byznys na detaily a zapojím marketingové hooky, které jsem nejdřív otestoval na vlastním podnikání. Žádná teorie — jen to, co funguje.",
+    hero_cta1:"Domluvit konzultaci →",hero_cta2:"Podívat se na výsledky",
+    badge1:"let v marketingu",badge2:"růst tržeb",
+    photo_hint:"Vložte hero.mp4 (nebo photo.jpg) vedle této stránky",
+    mq1:"Marketingová strategie",mq2:"Rozbor byznysu",mq3:"Prodejní hooky",mq4:"Růst tržeb",
+    about_eyebrow:"O mně",about_title:"Marketér, který testuje na sobě",
+    about_p1:"Jsem Maksym Varybrus. Pomáhám podnikatelům vidět jejich byznys jasně — kde se ztrácí peníze a kde je skrytý potenciál růstu.",
+    about_p2:"Každý hook a každou strategii nejdřív zkouším na vlastním podnikání. Doporučuji jen to, co reálně přineslo výsledky. Žádné prázdné sliby.",
+    stat1:"rozebraných byznysů",stat2:"průměrný růst tržeb",stat3:"let praxe",stat4:"ověřeno v praxi",
+    serv_eyebrow:"Co dělám",serv_title:"Služby",serv_lead:"Komplexní práce s marketingem — od hloubkového rozboru po konkrétní hooky, které zvyšují zisk.",
+    serv1_t:"Rozbor byznysu",serv1_d:"Hluboká analýza vašeho podnikání: trychtýř, ceny, publikum a body, kde unikají peníze.",
+    serv2_t:"Marketingové hooky",serv2_d:"Zapojení prodejních a obsahových hooků, otestovaných na reálných projektech a mém byznysu.",
+    serv3_t:"Strategie růstu",serv3_d:"Jasný plán, jak zvýšit tržby — krok za krokem, s metrikami a kontrolou výsledku.",
+    case_eyebrow:"Výsledky",case_title:"Čísla, která mluví",case_lead:"Hooky otestované na mém byznysu, které pak fungovaly i u klientů.",
+    case1_t:"Konverze webu",case1_d:"Po přepracování nabídky a zapojení hlavního hooku na landing page.",
+    case2_t:"Tržby za 4 měsíce",case2_d:"Rozbor trychtýře + nový prodejní scénář na vlastním projektu.",
+    case3_t:"Cena za lead",case3_d:"Optimalizace obsahových hooků a cílení publika.",
+    contact_title:"Pojďme rozebrat váš byznys",contact_lead:"Napište mi do Telegramu nebo zavolejte. Řeknu rovnou, kde je váš růstový potenciál.",
+    footer_rights:"Marketing & rozbor byznysu",load_hint:"Načítání"
+  },
+  uk:{
+    nav_about:"Про мене",nav_services:"Послуги",nav_cases:"Результати",nav_contact:"Контакти",
+    hero_tag:"Маркетинг · Розбір бізнесу",
+    hero_h1:'Перетворюю бізнес на <span class="hl">машину прибутку</span> за допомогою перевірених хуків',
+    hero_sub:"Розберу ваш бізнес по деталях і впроваджу маркетингові хуки, які спершу протестував на власній справі. Жодної теорії — лише те, що працює.",
+    hero_cta1:"Замовити консультацію →",hero_cta2:"Подивитись результати",
+    badge1:"років у маркетингу",badge2:"зростання виручки",
+    photo_hint:"Покладіть hero.mp4 (або photo.jpg) поряд із цією сторінкою",
+    mq1:"Маркетингова стратегія",mq2:"Розбір бізнесу",mq3:"Продажні хуки",mq4:"Зростання виручки",
+    about_eyebrow:"Про мене",about_title:"Маркетолог, який тестує на собі",
+    about_p1:"Я Максим Варибрус. Допомагаю підприємцям бачити свій бізнес чітко — де втрачаються гроші й де прихований потенціал зростання.",
+    about_p2:"Кожен хук і кожну стратегію спершу пробую на власному бізнесі. Раджу лише те, що реально дало результат. Жодних порожніх обіцянок.",
+    stat1:"розібраних бізнесів",stat2:"середнє зростання виручки",stat3:"років практики",stat4:"перевірено на практиці",
+    serv_eyebrow:"Що я роблю",serv_title:"Послуги",serv_lead:"Комплексна робота з маркетингом — від глибокого розбору до конкретних хуків, що збільшують прибуток.",
+    serv1_t:"Розбір бізнесу",serv1_d:"Глибокий аналіз вашої справи: вирва, ціни, аудиторія та точки, де витікають гроші.",
+    serv2_t:"Маркетингові хуки",serv2_d:"Впровадження продажних і контентних хуків, протестованих на реальних проєктах і моєму бізнесі.",
+    serv3_t:"Стратегія зростання",serv3_d:"Чіткий план, як збільшити виручку — крок за кроком, з метриками й контролем результату.",
+    case_eyebrow:"Результати",case_title:"Цифри, що говорять",case_lead:"Хуки, протестовані на моєму бізнесі, які потім спрацювали й у клієнтів.",
+    case1_t:"Конверсія сайту",case1_d:"Після переробки оферу та впровадження головного хука на лендингу.",
+    case2_t:"Виручка за 4 місяці",case2_d:"Розбір вирви + новий сценарій продажу на власному проєкті.",
+    case3_t:"Ціна за ліда",case3_d:"Оптимізація контентних хуків і таргетингу аудиторії.",
+    contact_title:"Розберімо ваш бізнес разом",contact_lead:"Напишіть мені в Telegram або зателефонуйте. Одразу скажу, де ваш потенціал зростання.",
+    footer_rights:"Маркетинг і розбір бізнесу",load_hint:"Завантаження"
+  },
+  ru:{
+    nav_about:"Обо мне",nav_services:"Услуги",nav_cases:"Результаты",nav_contact:"Контакты",
+    hero_tag:"Маркетинг · Разбор бизнеса",
+    hero_h1:'Превращаю бизнес в <span class="hl">машину прибыли</span> с помощью проверенных хуков',
+    hero_sub:"Разберу ваш бизнес по деталям и внедрю маркетинговые хуки, которые сначала протестировал на собственном деле. Никакой теории — только то, что работает.",
+    hero_cta1:"Записаться на консультацию →",hero_cta2:"Посмотреть результаты",
+    badge1:"лет в маркетинге",badge2:"рост выручки",
+    photo_hint:"Положите hero.mp4 (или photo.jpg) рядом с этой страницей",
+    mq1:"Маркетинговая стратегия",mq2:"Разбор бизнеса",mq3:"Продающие хуки",mq4:"Рост выручки",
+    about_eyebrow:"Обо мне",about_title:"Маркетолог, который тестирует на себе",
+    about_p1:"Я Максим Варибрус. Помогаю предпринимателям видеть свой бизнес ясно — где теряются деньги и где скрытый потенциал роста.",
+    about_p2:"Каждый хук и каждую стратегию сначала пробую на собственном бизнесе. Советую только то, что реально дало результат. Никаких пустых обещаний.",
+    stat1:"разобранных бизнесов",stat2:"средний рост выручки",stat3:"лет практики",stat4:"проверено на практике",
+    serv_eyebrow:"Что я делаю",serv_title:"Услуги",serv_lead:"Комплексная работа с маркетингом — от глубокого разбора до конкретных хуков, которые увеличивают прибыль.",
+    serv1_t:"Разбор бизнеса",serv1_d:"Глубокий анализ вашего дела: воронка, цены, аудитория и точки, где утекают деньги.",
+    serv2_t:"Маркетинговые хуки",serv2_d:"Внедрение продающих и контентных хуков, протестированных на реальных проектах и моём бизнесе.",
+    serv3_t:"Стратегия роста",serv3_d:"Чёткий план, как увеличить выручку — шаг за шагом, с метриками и контролем результата.",
+    case_eyebrow:"Результаты",case_title:"Цифры, которые говорят",case_lead:"Хуки, протестированные на моём бизнесе, которые потом сработали и у клиентов.",
+    case1_t:"Конверсия сайта",case1_d:"После переработки оффера и внедрения главного хука на лендинге.",
+    case2_t:"Выручка за 4 месяца",case2_d:"Разбор воронки + новый сценарий продаж на собственном проекте.",
+    case3_t:"Цена за лид",case3_d:"Оптимизация контентных хуков и таргетинга аудитории.",
+    contact_title:"Давайте разберём ваш бизнес",contact_lead:"Напишите мне в Telegram или позвоните. Сразу скажу, где ваш потенциал роста.",
+    footer_rights:"Маркетинг и разбор бизнеса",load_hint:"Загрузка"
+  }
+};
+function setLang(l){
+  document.documentElement.lang=l;
+  document.querySelectorAll('[data-i]').forEach(el=>{
+    const k=el.getAttribute('data-i');
+    if(I18N[l]&&I18N[l][k]!=null) el.innerHTML=I18N[l][k];
+  });
+  document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+let saved='cs';try{saved=localStorage.getItem('lang')||'cs'}catch(e){}
+setLang(saved);
+
+/* marquee: bounce back and forth (ping-pong), never leaving empty space */
+(function(){
+  const track=document.getElementById('mq'),box=track.parentElement;
+  const base=track.innerHTML;
+  // repeat content until it comfortably overflows the strip
+  let guard=0;
+  while(track.scrollWidth < box.clientWidth*1.5 && guard<10){ track.innerHTML+=base; guard++; }
+  let x=0,dir=-1;const speed=45;        // px per second
+  let last=performance.now();
+  function loop(now){
+    const dt=Math.min((now-last)/1000,.05);last=now;
+    const min=Math.min(0, box.clientWidth-track.scrollWidth); // furthest left
+    x+=dir*speed*dt;
+    if(x<=min){x=min;dir=1;}            // hit right edge → go back
+    else if(x>=0){x=0;dir=-1;}          // hit left edge → go forward
+    track.style.transform='translateX('+x+'px)';
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* header scroll */
+const header=document.getElementById('header');
+addEventListener('scroll',()=>header.classList.toggle('scrolled',scrollY>30));
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* cursor glow */
+const cg=document.getElementById('cglow');
+addEventListener('mousemove',e=>{cg.style.opacity=1;cg.style.left=e.clientX+'px';cg.style.top=e.clientY+'px'});
+addEventListener('mouseleave',()=>cg.style.opacity=0);
+
+/* burger */
+document.getElementById('burger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('mobile-open'));
+document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('mobile-open')));
+
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* ===== hero video: seamless ping-pong loop (forward then reverse) ===== */
+(function(){
+  const v=document.getElementById('heroVideo');
+  if(!v) return;
+  const fallback=v.parentElement.querySelector('.fallback');
+  let reversing=false,lastT=0;
+  v.addEventListener('ended',()=>{          // hit the end → rewind at real 1x speed
+    reversing=true; v.pause(); lastT=performance.now();
+    requestAnimationFrame(stepBack);
+  });
+  function stepBack(now){
+    if(!reversing) return;
+    const dt=(now-lastT)/1000; lastT=now;   // real elapsed time → true 1x playback
+    const t=v.currentTime-dt;
+    if(t<=0){                               // reached start → play forward again, seamlessly
+      v.currentTime=0; reversing=false; v.play().catch(()=>{}); return;
+    }
+    v.currentTime=t;
+    requestAnimationFrame(stepBack);
+  }
+  v.play().catch(()=>{});                              // some browsers need an explicit start
+  /* if no video file is present, show the MV fallback */
+  v.addEventListener('error',showFallback);
+  v.querySelectorAll('source').forEach(s=>s.addEventListener('error',()=>{
+    if(v.networkState===HTMLMediaElement.NETWORK_NO_SOURCE) showFallback();
+  }));
+  function showFallback(){ v.style.display='none'; if(fallback) fallback.style.display='flex'; }
+})();
+
+/* ===== preloader: animated % + explosion ===== */
+(function(){
+  const pctEl=document.getElementById('pct'),bar=document.getElementById('bar'),
+        loader=document.getElementById('loader');
+  /* time-based, cinematic easing — slow, with dramatic dwell points */
+  const DURATION=6200;            // total load time (ms) — slow & enchanting
+  const DWELLS=[                  // {at:%, pause:ms} brief holds that build suspense
+    {at:24,pause:520,done:false},
+    {at:58,pause:680,done:false},
+    {at:88,pause:760,done:false}
+  ];
+  const start=performance.now();
+  let shown=0,extra=0;            // extra = accumulated dwell time
+  const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2; // easeInOutQuad
+  function frame(now){
+    const t=Math.min((now-start-extra)/DURATION,1);
+    let target=ease(t)*100;
+    for(const d of DWELLS){
+      if(!d.done && target>=d.at){d.done=true;extra+=d.pause;target=d.at;}
+    }
+    shown=Math.max(shown,target);
+    render(shown);
+    if(t>=1){shown=100;render(100);return setTimeout(reveal,520);}
+    requestAnimationFrame(frame);
+  }
+  const render=v=>{pctEl.textContent=Math.floor(v);bar.style.width=v+'%';};
+
+  /* clean, premium reveal: loader gently fades and lifts away */
+  function reveal(){
+    setTimeout(()=>{
+      loader.classList.add('out');
+      document.body.classList.remove('loading');
+      setTimeout(()=>loader.remove(),950);
+    },450);                                        // brief beat on 100% before fading
+  }
+  setTimeout(()=>requestAnimationFrame(frame),500);
+})();
+</script>
+</body>
+</html>

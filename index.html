@@ -50,6 +50,30 @@
     transform:translate(-50%,-50%);transition:opacity .3s;opacity:0;
     background:radial-gradient(circle,rgba(var(--accent-rgb),.18),transparent 60%)}
 
+  /* ---------- premium custom cursor (desktop / fine-pointer only) ---------- */
+  @media (hover:hover) and (pointer:fine){
+    body.has-cursor,body.has-cursor a,body.has-cursor button,
+    body.has-cursor .btn,body.has-cursor .clink,body.has-cursor [data-cursor]{cursor:none}
+    #cursorRing,#cursorDot{position:fixed;left:0;top:0;z-index:10000;pointer-events:none;display:none;will-change:transform}
+    body.has-cursor #cursorRing{display:flex}
+    body.has-cursor #cursorDot{display:block}
+    #cursorDot{width:6px;height:6px;border-radius:50%;background:var(--accent);
+      box-shadow:0 0 0 1px rgba(0,0,0,.3);transition:opacity .2s ease}
+    #cursorRing{align-items:center;justify-content:center;width:40px;height:40px;
+      border:1.5px solid rgba(255,255,255,.38);border-radius:999px;
+      transition:width .35s cubic-bezier(.2,.8,.2,1),height .35s cubic-bezier(.2,.8,.2,1),
+        background-color .3s ease,border-color .3s ease}
+    #cursorRing .clabel{font-family:'Manrope',sans-serif;font-weight:700;font-size:12px;letter-spacing:.04em;
+      color:var(--accent);white-space:nowrap;opacity:0;transform:translateY(3px);
+      transition:opacity .22s ease,transform .22s ease}
+    body.cz-hover #cursorRing{width:54px;height:54px;border-color:rgba(var(--accent-rgb),.75)}
+    body.cz-hover #cursorDot{opacity:0}
+    body.cz-label #cursorRing{width:auto;min-width:54px;height:34px;padding:0 18px;
+      background:rgba(13,13,16,.94);border-color:rgba(var(--accent-rgb),.55)}
+    body.cz-label #cursorRing .clabel{opacity:1;transform:none}
+    body.cz-label #cursorDot{opacity:0}
+  }
+
   /* ---------- header ---------- */
   header{position:fixed;top:0;left:0;right:0;z-index:50;transition:.3s;
     backdrop-filter:blur(0px)}
@@ -226,6 +250,8 @@
 <div class="bg-fx"><div class="orb a"></div><div class="orb b"></div></div>
 <div class="grain"></div>
 <div class="cursor-glow" id="cglow"></div>
+<div id="cursorRing" aria-hidden="true"><span class="clabel"></span></div>
+<div id="cursorDot" aria-hidden="true"></div>
 
 <header id="header">
   <div class="wrap nav">
@@ -257,8 +283,8 @@
       <h1 data-i="hero_h1">Proměňuji byznys v <span class="hl">stroj na zisk</span> pomocí ověřených hooků</h1>
       <p class="sub" data-i="hero_sub">Rozeberu váš byznys na detaily a zapojím marketingové hooky, které jsem nejdřív otestoval na vlastním podnikání. Žádná teorie — jen to, co funguje.</p>
       <div class="cta-row">
-        <a href="#contact" class="btn btn-primary" data-i="hero_cta1">Domluvit konzultaci →</a>
-        <a href="#cases" class="btn btn-ghost" data-i="hero_cta2">Podívat se na výsledky</a>
+        <a href="#contact" class="btn btn-primary" data-cursor="contact" data-i="hero_cta1">Domluvit konzultaci →</a>
+        <a href="#cases" class="btn btn-ghost" data-cursor="cases" data-i="hero_cta2">Podívat se na výsledky</a>
       </div>
     </div>
     <div class="photo-wrap reveal in">
@@ -314,9 +340,9 @@
       <p class="sec-lead" data-i="serv_lead">Komplexní práce s marketingem — od hloubkového rozboru po konkrétní hooky, které zvyšují zisk.</p>
     </div>
     <div class="cards">
-      <div class="card reveal"><div class="ic">🔍</div><h3 data-i="serv1_t">Rozbor byznysu</h3><p data-i="serv1_d">Hluboká analýza vašeho podnikání: trychtýř, ceny, publikum a body, kde unikají peníze.</p></div>
-      <div class="card reveal"><div class="ic">🪝</div><h3 data-i="serv2_t">Marketingové hooky</h3><p data-i="serv2_d">Zapojení prodejních a obsahových hooků, otestovaných na reálných projektech a mém byznysu.</p></div>
-      <div class="card reveal"><div class="ic">📈</div><h3 data-i="serv3_t">Strategie růstu</h3><p data-i="serv3_d">Jasný plán, jak zvýšit tržby — krok za krokem, s metrikami a kontrolou výsledku.</p></div>
+      <div class="card reveal" data-cursor="more"><div class="ic">🔍</div><h3 data-i="serv1_t">Rozbor byznysu</h3><p data-i="serv1_d">Hluboká analýza vašeho podnikání: trychtýř, ceny, publikum a body, kde unikají peníze.</p></div>
+      <div class="card reveal" data-cursor="more"><div class="ic">🪝</div><h3 data-i="serv2_t">Marketingové hooky</h3><p data-i="serv2_d">Zapojení prodejních a obsahových hooků, otestovaných na reálných projektech a mém byznysu.</p></div>
+      <div class="card reveal" data-cursor="more"><div class="ic">📈</div><h3 data-i="serv3_t">Strategie růstu</h3><p data-i="serv3_d">Jasný plán, jak zvýšit tržby — krok za krokem, s metrikami a kontrolou výsledku.</p></div>
     </div>
   </div>
 </section>
@@ -330,9 +356,9 @@
       <p class="sec-lead" data-i="case_lead">Hooky otestované na mém byznysu, které pak fungovaly i u klientů.</p>
     </div>
     <div class="cases">
-      <div class="case reveal"><div class="big">+212%</div><div class="t" data-i="case1_t">Konverze webu</div><div class="d" data-i="case1_d">Po přepracování nabídky a zapojení hlavního hooku na landing page.</div></div>
-      <div class="case reveal"><div class="big">×3,4</div><div class="t" data-i="case2_t">Tržby za 4 měsíce</div><div class="d" data-i="case2_d">Rozbor trychtýře + nový prodejní scénář na vlastním projektu.</div></div>
-      <div class="case reveal"><div class="big">−38%</div><div class="t" data-i="case3_t">Cena za lead</div><div class="d" data-i="case3_d">Optimalizace obsahových hooků a cílení publika.</div></div>
+      <div class="case reveal" data-cursor="cases"><div class="big">+212%</div><div class="t" data-i="case1_t">Konverze webu</div><div class="d" data-i="case1_d">Po přepracování nabídky a zapojení hlavního hooku na landing page.</div></div>
+      <div class="case reveal" data-cursor="cases"><div class="big">×3,4</div><div class="t" data-i="case2_t">Tržby za 4 měsíce</div><div class="d" data-i="case2_d">Rozbor trychtýře + nový prodejní scénář na vlastním projektu.</div></div>
+      <div class="case reveal" data-cursor="cases"><div class="big">−38%</div><div class="t" data-i="case3_t">Cena za lead</div><div class="d" data-i="case3_d">Optimalizace obsahových hooků a cílení publika.</div></div>
     </div>
   </div>
 </section>
@@ -345,15 +371,15 @@
       <h2 data-i="contact_title">Pojďme rozebrat váš byznys</h2>
       <p data-i="contact_lead">Napište mi do Telegramu nebo zavolejte. Řeknu rovnou, kde je váš růstový potenciál.</p>
       <div class="contact-links">
-        <a class="clink" href="https://t.me/VarybrusMaksym" target="_blank" rel="noopener">
+        <a class="clink" href="https://t.me/VarybrusMaksym" target="_blank" rel="noopener" data-cursor="contact">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.5 18.6 20c-.25 1.11-.92 1.38-1.86.86l-5.14-3.79-2.48 2.39c-.27.27-.5.5-1.03.5l.37-5.22 9.5-8.58c.41-.37-.09-.57-.64-.2L5.07 13.12 0 11.53c-1.1-.34-1.12-1.1.23-1.63L20.52 2.9c.91-.34 1.71.22 1.42 1.6Z"/></svg>
           @VarybrusMaksym
         </a>
-        <a class="clink" href="tel:+420776364466">
+        <a class="clink" href="tel:+420776364466" data-cursor="contact">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
           +420 776 364 466
         </a>
-        <a class="clink" href="https://instagram.com/" target="_blank" rel="noopener" id="igLink">
+        <a class="clink" href="https://instagram.com/" target="_blank" rel="noopener" id="igLink" data-cursor="open">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           Instagram
         </a>
@@ -495,6 +521,60 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 const cg=document.getElementById('cglow');
 addEventListener('mousemove',e=>{cg.style.opacity=1;cg.style.left=e.clientX+'px';cg.style.top=e.clientY+'px'});
 addEventListener('mouseleave',()=>cg.style.opacity=0);
+
+/* ===== premium custom cursor: dot + trailing ring, magnetic, contextual labels (desktop only) ===== */
+(function(){
+  const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(!fine||reduce) return;                         // no custom cursor on touch / reduced-motion
+  const ring=document.getElementById('cursorRing'),dot=document.getElementById('cursorDot');
+  if(!ring||!dot) return;
+  const label=ring.querySelector('.clabel');
+  document.body.classList.add('has-cursor');
+
+  const LBL={
+    contact:{cs:'Spojit se',uk:"Зв'язатися",ru:'Связаться'},
+    cases:{cs:'Případy',uk:'Кейси',ru:'Кейсы'},
+    more:{cs:'Více',uk:'Більше',ru:'Подробнее'},
+    open:{cs:'Otevřít',uk:'Відкрити',ru:'Открыть'}
+  };
+
+  let mx=innerWidth/2,my=innerHeight/2,dx=mx,dy=my,rx=mx,ry=my;
+  addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;},{passive:true});
+  (function loop(){
+    dx+=(mx-dx)*0.35; dy+=(my-dy)*0.35;            // dot: snappy & precise
+    rx+=(mx-rx)*0.18; ry+=(my-ry)*0.18;            // ring: smooth inertia (trailing)
+    dot.style.transform='translate3d('+dx+'px,'+dy+'px,0) translate(-50%,-50%)';
+    ring.style.transform='translate3d('+rx+'px,'+ry+'px,0) translate(-50%,-50%)';
+    requestAnimationFrame(loop);
+  })();
+
+  const HOVER='a,button,.btn,.clink,.card,.case,.lang button,[data-cursor]';
+  document.querySelectorAll(HOVER).forEach(el=>{
+    el.addEventListener('mouseenter',()=>{
+      document.body.classList.add('cz-hover');
+      const host=el.matches('[data-cursor]')?el:el.closest('[data-cursor]');
+      const key=host&&host.getAttribute('data-cursor');
+      const lang=document.documentElement.lang||'cs';
+      const t=key&&LBL[key]&&(LBL[key][lang]||LBL[key].cs);
+      if(t){label.textContent=t;document.body.classList.add('cz-label');}
+    });
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('cz-hover','cz-label'));
+  });
+
+  /* gentle magnetic pull on pill buttons */
+  document.querySelectorAll('.btn,.clink').forEach(el=>{
+    el.addEventListener('pointermove',e=>{
+      const r=el.getBoundingClientRect();
+      el.style.transform='translate('+((e.clientX-(r.left+r.width/2))*0.22)+'px,'+((e.clientY-(r.top+r.height/2))*0.30)+'px)';
+    });
+    el.addEventListener('pointerleave',()=>{el.style.transform='';});
+  });
+
+  /* fade out when the pointer leaves the window */
+  document.addEventListener('mouseleave',()=>{dot.style.opacity='0';ring.style.opacity='0';});
+  document.addEventListener('mouseenter',()=>{dot.style.opacity='';ring.style.opacity='';});
+})();
 
 /* burger */
 document.getElementById('burger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('mobile-open'));

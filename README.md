@@ -4,8 +4,8 @@
 
 ## Файлы
 - `index.html` — сам сайт
-- `hero.mp4` — видео для hero (должно лежать рядом с index.html)
-- `server.js` — лёгкий статический сервер на Node (с поддержкой Range для видео)
+- `hero.png` — фото для hero (должно лежать рядом с index.html)
+- `server.js` — лёгкий статический сервер на Node
 - `package.json` — запуск на Railway / Node-хостингах (`npm start` → `node server.js`)
 - `.gitignore`
 

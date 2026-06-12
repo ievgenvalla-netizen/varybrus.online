@@ -5,7 +5,8 @@
 ## Файлы
 - `index.html` — сам сайт
 - `hero.mp4` — видео для hero (должно лежать рядом с index.html)
-- `package.json` — запуск статики на Railway / Node-хостингах
+- `server.js` — лёгкий статический сервер на Node (с поддержкой Range для видео)
+- `package.json` — запуск на Railway / Node-хостингах (`npm start` → `node server.js`)
 - `.gitignore`
 
 ## Локально

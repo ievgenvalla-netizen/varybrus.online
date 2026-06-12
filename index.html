@@ -266,7 +266,7 @@
       <div class="badge-float badge-2"><div class="n">×3</div><div class="l" data-i="badge2">růst tržeb</div></div>
       <div class="photo-ring"></div>
       <div class="photo">
-        <video id="heroVideo" autoplay muted playsinline preload="auto" poster="photo.jpg">
+        <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="photo.jpg">
           <source src="hero.mp4" type="video/mp4">
           <source src="hero.webm" type="video/webm">
         </video>
@@ -504,28 +504,12 @@ document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',(
 
 document.getElementById('yr').textContent=new Date().getFullYear();
 
-/* ===== hero video: seamless ping-pong loop (forward then reverse) ===== */
+/* ===== hero video: boomerang clip (forward+reverse baked in), native seamless loop ===== */
 (function(){
   const v=document.getElementById('heroVideo');
   if(!v) return;
   const fallback=v.parentElement.querySelector('.fallback');
-  let reversing=false,lastT=0;
-  v.addEventListener('ended',()=>{          // hit the end → rewind at real 1x speed
-    reversing=true; v.pause(); lastT=performance.now();
-    requestAnimationFrame(stepBack);
-  });
-  function stepBack(now){
-    if(!reversing) return;
-    const dt=(now-lastT)/1000; lastT=now;   // real elapsed time → true 1x playback
-    const t=v.currentTime-dt;
-    if(t<=0){                               // reached start → play forward again, seamlessly
-      v.currentTime=0; reversing=false; v.play().catch(()=>{}); return;
-    }
-    v.currentTime=t;
-    requestAnimationFrame(stepBack);
-  }
   v.play().catch(()=>{});                              // some browsers need an explicit start
-  /* if no video file is present, show the MV fallback */
   v.addEventListener('error',showFallback);
   v.querySelectorAll('source').forEach(s=>s.addEventListener('error',()=>{
     if(v.networkState===HTMLMediaElement.NETWORK_NO_SOURCE) showFallback();

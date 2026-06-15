@@ -233,6 +233,10 @@
   .load-name{font-family:'Unbounded';font-weight:800;font-size:clamp(20px,3vw,30px);letter-spacing:.04em;
     opacity:0;animation:fadeUp .8s .2s forwards}
   .load-name b{color:var(--accent)}
+  .load-name.assemble{display:inline-flex;flex-wrap:wrap;justify-content:center;letter-spacing:.02em}
+  .load-name .ln{display:inline-block;will-change:transform,opacity,filter}
+  .load-name .ln.acc{color:var(--accent)}
+  .load-name .ln-space{display:inline-block;width:.34em}
   @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
   .load-pct{font-family:'Unbounded';font-weight:900;font-size:clamp(64px,16vw,150px);line-height:1;
     color:#fff;position:relative;animation:pctBreath 2.6s ease-in-out infinite}
@@ -667,6 +671,38 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 (function(){
   const pctEl=document.getElementById('pct'),bar=document.getElementById('bar'),
         loader=document.getElementById('loader');
+
+  /* ----- hybrid name assembly: scattered + decoding into MAKSYM VARYBRUS ----- */
+  const nameEl=document.querySelector('.load-name');
+  const reduceMo=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const FULL='MAKSYM VARYBRUS', accentStart=FULL.indexOf(' ')+1, GL='ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&@$*';
+  let letters=[];
+  if(nameEl){
+    nameEl.classList.add('assemble'); nameEl.innerHTML='';
+    for(let i=0;i<FULL.length;i++){
+      const ch=FULL[i];
+      if(ch===' '){const sp=document.createElement('span');sp.className='ln-space';nameEl.appendChild(sp);continue;}
+      const s=document.createElement('span'); s.className='ln'+(i>=accentStart?' acc':''); s.textContent=ch; s.style.opacity='0.12';
+      nameEl.appendChild(s);
+      const st=Math.min(82,(i/FULL.length)*70+Math.random()*12);
+      letters.push({el:s,ch,dx:(Math.random()*2-1)*60,dy:(Math.random()*2-1)*40,rot:(Math.random()*2-1)*18,start:st,end:Math.min(100,st+26),last:0});
+    }
+  }
+  const easeOutN=t=>1-Math.pow(1-t,3);
+  function updateName(p){
+    if(reduceMo) return;
+    for(const L of letters){
+      let t=(p-L.start)/(L.end-L.start); t=t<0?0:t>1?1:t;
+      const e=easeOutN(t), inv=1-e;
+      L.el.style.transform='translate('+(L.dx*inv).toFixed(1)+'px,'+(L.dy*inv).toFixed(1)+'px) rotate('+(L.rot*inv).toFixed(1)+'deg)';
+      L.el.style.opacity=(0.12+0.88*e).toFixed(2);
+      L.el.style.filter=inv>0.03?'blur('+(inv*3).toFixed(1)+'px)':'none';
+      if(t<0.6){const n=performance.now(); if(n-L.last>55){L.el.textContent=GL[(Math.random()*GL.length)|0];L.last=n;}}
+      else if(L.el.textContent!==L.ch){L.el.textContent=L.ch;}
+    }
+  }
+  updateName(0);
+
   /* time-based, cinematic easing — slow, with dramatic dwell points */
   const DURATION=6200;            // total load time (ms) — slow & enchanting
   const DWELLS=[                  // {at:%, pause:ms} brief holds that build suspense
@@ -688,7 +724,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     if(t>=1){shown=100;render(100);return setTimeout(reveal,520);}
     requestAnimationFrame(frame);
   }
-  const render=v=>{pctEl.textContent=Math.floor(v);bar.style.width=v+'%';};
+  const render=v=>{pctEl.textContent=Math.floor(v);bar.style.width=v+'%';updateName(v);};
 
   /* clean, premium reveal: loader gently fades and lifts away */
   function reveal(){

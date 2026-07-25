@@ -176,6 +176,21 @@
   .stat .num{font-family:'Unbounded';font-weight:900;font-size:40px;color:var(--accent)}
   .stat .lab{color:var(--muted);font-size:14px;font-weight:600;margin-top:6px}
 
+  /* trust logos */
+  .trust{padding:64px 0}
+  .trust .eyebrow{text-align:center;margin-bottom:34px}
+  .logo-row{display:flex;align-items:center;justify-content:center;gap:56px;flex-wrap:wrap}
+  .plogo{display:flex;align-items:center;justify-content:center;opacity:.55;
+    transition:opacity .3s ease,transform .3s ease}
+  .plogo:hover{opacity:1;transform:translateY(-3px)}
+  .plogo img{height:52px;max-width:210px;width:auto;object-fit:contain;display:block}
+  .plogo.wide img{height:30px;max-width:260px}
+  @media(max-width:620px){
+    .logo-row{gap:32px}
+    .plogo img{height:40px;max-width:150px}
+    .plogo.wide img{height:22px;max-width:190px}
+  }
+
   /* services */
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;margin-top:50px}
   .card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:32px;
@@ -381,6 +396,20 @@
   </div>
 </section>
 
+<!-- TRUST / PARTNER LOGOS -->
+<section class="trust" id="trust">
+  <div class="wrap reveal">
+    <div class="eyebrow" data-i="trust_eyebrow">Důvěřují mi</div>
+    <div class="logo-row">
+      <div class="plogo"><img src="logos/logo-agroterem.png" alt="Agroterem" loading="lazy"></div>
+      <div class="plogo"><img src="logos/logo-pizzafarm.png" alt="Pizza Farm" loading="lazy"></div>
+      <div class="plogo"><img src="logos/logo-aurum.png" alt="Aurum Agency" loading="lazy"></div>
+      <div class="plogo wide"><img src="logos/logo-balanza.png" alt="Balanza Business Services" loading="lazy"></div>
+      <div class="plogo wide"><img src="logos/logo-fundamental.png" alt="Fundamental Pro s.r.o." loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
 <!-- SERVICES -->
 <section id="services">
   <div class="wrap">
@@ -457,6 +486,7 @@ const I18N = {
     serv2_t:"Odhalení děr",serv2_d:"Najdeme slabá místa, kvůli kterým byznys ztrácí peníze, klienty, pozornost a důvěru.",
     serv3_t:"Strategie růstu",serv3_d:"Vytvoříme srozumitelnou strategii: co měnit, v jakém pořadí a jak to má ovlivnit byznys.",
     serv4_t:"Škálování",serv4_d:"Pomůžeme proměnit byznys v systém, který lze posilovat, propagovat a škálovat.",
+    trust_eyebrow:"Důvěřují mi",
     contact_title:"Pojďme rozebrat tvůj byznys hned teď",contact_lead:"Zanech poptávku na hodinový placený rozbor byznysu — a ukážeme ti, kde tvůj byznys ztrácí peníze, sílu značky a pozornost klientů.",contact_cta:"Zanechat poptávku. GO!",
     footer_rights:"Marketing & branding",load_hint:"Načítání"
   },
@@ -479,6 +509,7 @@ const I18N = {
     serv2_t:"Виявлення дірок",serv2_d:"Знаходимо слабкі місця, через які бізнес втрачає гроші, клієнтів, увагу та довіру.",
     serv3_t:"Стратегія зростання",serv3_d:"Створюємо зрозумілу стратегію: що змінювати, у якому порядку і як це має вплинути на бізнес.",
     serv4_t:"Масштаб",serv4_d:"Допомагаємо перетворити бізнес на систему, яку можна посилювати, просувати та масштабувати.",
+    trust_eyebrow:"Мені довіряють",
     contact_title:"Давай розберемо твій бізнес зараз",contact_lead:"Залиш заявку на годинний платний розбір бізнесу — і ми покажемо, де твій бізнес втрачає гроші, силу бренду та увагу клієнтів.",contact_cta:"Залишити заявку. GO!",
     footer_rights:"Маркетинг і брендинг",load_hint:"Завантаження"
   },
@@ -501,6 +532,7 @@ const I18N = {
     serv2_t:"Выявление дырок",serv2_d:"Находим слабые места, из-за которых бизнес теряет деньги, клиентов, внимание и доверие.",
     serv3_t:"Стратегия роста",serv3_d:"Создаём понятную стратегию: что менять, в каком порядке и как это должно повлиять на бизнес.",
     serv4_t:"Масштаб",serv4_d:"Помогаем превратить бизнес в систему, которую можно усиливать, продвигать и масштабировать.",
+    trust_eyebrow:"Мне доверяют",
     contact_title:"Давай разберём твой бизнес сейчас",contact_lead:"Оставь заявку на часовой платный разбор бизнеса — и мы покажем, где твой бизнес теряет деньги, силу бренда и внимание клиентов.",contact_cta:"Оставить заявку. GO!",
     footer_rights:"Маркетинг и брендинг",load_hint:"Загрузка"
   }

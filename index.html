@@ -4,6 +4,31 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Maksym Varybrus — Marketing & Branding</title>
+<meta name="description" content="Marketing a branding pro malé a střední firmy. Rozbor byznysu, strategie růstu a značka, kterou si zapamatují. Maksym Varybrus — 15+ let praxe v byznysu a marketingu.">
+<link rel="canonical" href="https://varybrus.cz/">
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://varybrus.cz/">
+<meta property="og:site_name" content="Maksym Varybrus">
+<meta property="og:title" content="Maksym Varybrus — Marketing & Branding">
+<meta property="og:description" content="Tvůj byznys si zapamatují miliony. Marketing a branding, které mění chaotický byznys v ucelenou značku.">
+<meta property="og:image" content="https://varybrus.cz/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="cs_CZ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Maksym Varybrus — Marketing & Branding">
+<meta name="twitter:description" content="Tvůj byznys si zapamatují miliony. Marketing a branding pro malé a střední firmy.">
+<meta name="twitter:image" content="https://varybrus.cz/og.jpg">
+<!-- Icons -->
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" href="favicon-32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#070708">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"Maksym Varybrus","url":"https://varybrus.cz/","image":"https://varybrus.cz/og.jpg","description":"Marketing a branding pro malé a střední firmy. Rozbor byznysu, strategie růstu, budování značky.","telephone":"+420776364466","address":{"@type":"PostalAddress","streetAddress":"Rubeška 383/4","addressLocality":"Praha 9","postalCode":"19000","addressCountry":"CZ"},"founder":{"@type":"Person","name":"Maksym Varybrus"},"sameAs":["https://www.instagram.com/maksym_varybrus","https://t.me/VarybrusMaksym"]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Unbounded:wght@600;800;900&display=swap" rel="stylesheet">
@@ -280,6 +305,19 @@
     background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 0 18px var(--accent)}
   .load-hint{font-size:12px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase}
 
+  /* ---------- cookie consent ---------- */
+  #cookiebar{position:fixed;left:50%;bottom:18px;transform:translate(-50%,140%);z-index:9000;
+    width:min(680px,calc(100vw - 32px));background:rgba(13,13,16,.97);border:1px solid var(--line);
+    border-radius:18px;padding:18px 20px;box-shadow:0 20px 60px rgba(0,0,0,.6);
+    backdrop-filter:blur(10px);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+  #cookiebar.show{transform:translate(-50%,0)}
+  #cookiebar p{font-size:13.5px;color:var(--muted);margin:0 0 14px;line-height:1.55}
+  #cookiebar p a{color:var(--accent);text-decoration:underline}
+  .cookie-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .cookie-actions .btn{padding:10px 20px;font-size:13.5px}
+  .btn-cookie-decline{background:none;border:1px solid var(--line);color:var(--muted)}
+  .btn-cookie-decline:hover{border-color:var(--accent);color:var(--text)}
+
   /* responsive */
   @media(max-width:900px){
     .hero{padding:100px 0 50px}
@@ -474,6 +512,16 @@
   </div>
 </section>
 
+<!-- COOKIE CONSENT -->
+<div id="cookiebar" role="dialog" aria-live="polite">
+  <p><span data-i="cookie_text">Tento web používá pouze nezbytné technické úložiště (volba jazyka). Analytické cookies zapneme jen s tvým souhlasem.</span>
+    <a href="privacy.html" data-i="cookie_more">Více informací</a></p>
+  <div class="cookie-actions">
+    <button class="btn btn-primary" id="cookieAccept" data-i="cookie_accept">Souhlasím</button>
+    <button class="btn btn-cookie-decline" id="cookieDecline" data-i="cookie_decline">Odmítnout</button>
+  </div>
+</div>
+
 <footer>
   <div class="wrap">
     <div class="footer-socials">
@@ -481,7 +529,11 @@
       <a href="tel:+420776364466" aria-label="Phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg></a>
       <a href="https://www.instagram.com/maksym_varybrus?igsh=cGo5eHI4Nm9qbm52" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
     </div>
-    <div>© <span id="yr"></span> Maksym Varybrus · <span data-i="footer_rights">Marketing & rozbor byznysu</span></div>
+    <div>© <span id="yr"></span> Maksym Varybrus · <span data-i="footer_rights">Marketing & branding</span></div>
+    <div style="margin-top:10px;font-size:12.5px;opacity:.75">
+      Maksym Varybrus · IČO: 21840831 · Rubeška 383/4, 190 00 Praha 9 ·
+      <a href="privacy.html" style="text-decoration:underline" data-i="footer_privacy">Ochrana osobních údajů</a>
+    </div>
   </div>
 </footer>
 
@@ -509,7 +561,10 @@ const I18N = {
     serv4_t:"Škálování",serv4_d:"Pomůžeme proměnit byznys v systém, který lze posilovat, propagovat a škálovat.",
     trust_eyebrow:"Partneři",trust_title:"Důvěřují mi",trust_lead:"Firmy, které rostou spolu se mnou a mým týmem.",
     contact_title:"Pojďme rozebrat tvůj byznys hned teď",contact_lead:"Zanech poptávku na hodinový placený rozbor byznysu — a ukážeme ti, kde tvůj byznys ztrácí peníze, sílu značky a pozornost klientů.",contact_cta:"Zanechat poptávku. GO!",
-    footer_rights:"Marketing & branding",load_hint:"Načítání"
+    footer_rights:"Marketing & branding",load_hint:"Načítání",
+    footer_privacy:"Ochrana osobních údajů",
+    cookie_text:"Tento web používá pouze nezbytné technické úložiště (volba jazyka). Analytické cookies zapneme jen s tvým souhlasem.",
+    cookie_more:"Více informací",cookie_accept:"Souhlasím",cookie_decline:"Odmítnout"
   },
   uk:{
     nav_about:"Про мене",nav_services:"Послуги",nav_contact:"Контакти",
@@ -532,7 +587,10 @@ const I18N = {
     serv4_t:"Масштаб",serv4_d:"Допомагаємо перетворити бізнес на систему, яку можна посилювати, просувати та масштабувати.",
     trust_eyebrow:"Партнери",trust_title:"Мені довіряють",trust_lead:"Компанії, які зростають разом зі мною та моєю командою.",
     contact_title:"Давай розберемо твій бізнес зараз",contact_lead:"Залиш заявку на годинний платний розбір бізнесу — і ми покажемо, де твій бізнес втрачає гроші, силу бренду та увагу клієнтів.",contact_cta:"Залишити заявку. GO!",
-    footer_rights:"Маркетинг і брендинг",load_hint:"Завантаження"
+    footer_rights:"Маркетинг і брендинг",load_hint:"Завантаження",
+    footer_privacy:"Захист персональних даних",
+    cookie_text:"Цей сайт використовує лише необхідне технічне сховище (вибір мови). Аналітичні cookies увімкнемо тільки за твоєю згодою.",
+    cookie_more:"Докладніше",cookie_accept:"Погоджуюсь",cookie_decline:"Відхилити"
   },
   ru:{
     nav_about:"Обо мне",nav_services:"Услуги",nav_contact:"Контакты",
@@ -555,7 +613,10 @@ const I18N = {
     serv4_t:"Масштаб",serv4_d:"Помогаем превратить бизнес в систему, которую можно усиливать, продвигать и масштабировать.",
     trust_eyebrow:"Партнёры",trust_title:"Мне доверяют",trust_lead:"Компании, которые растут вместе со мной и моей командой.",
     contact_title:"Давай разберём твой бизнес сейчас",contact_lead:"Оставь заявку на часовой платный разбор бизнеса — и мы покажем, где твой бизнес теряет деньги, силу бренда и внимание клиентов.",contact_cta:"Оставить заявку. GO!",
-    footer_rights:"Маркетинг и брендинг",load_hint:"Загрузка"
+    footer_rights:"Маркетинг и брендинг",load_hint:"Загрузка",
+    footer_privacy:"Защита персональных данных",
+    cookie_text:"Этот сайт использует только необходимое техническое хранилище (выбор языка). Аналитические cookies включим только с твоего согласия.",
+    cookie_more:"Подробнее",cookie_accept:"Согласен",cookie_decline:"Отклонить"
   }
 };
 function setLang(l){
@@ -664,6 +725,33 @@ document.getElementById('burger').addEventListener('click',()=>document.getEleme
 document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('mobile-open')));
 
 document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* ===== cookie consent (gate for future analytics) ===== */
+(function(){
+  const bar=document.getElementById('cookiebar');
+  if(!bar) return;
+  let choice=null; try{choice=localStorage.getItem('cookie_consent')}catch(e){}
+  window.hasAnalyticsConsent=()=>{try{return localStorage.getItem('cookie_consent')==='granted'}catch(e){return false}};
+  function close(v){
+    try{localStorage.setItem('cookie_consent',v)}catch(e){}
+    bar.classList.remove('show');
+    setTimeout(()=>bar.remove(),600);
+    if(v==='granted') enableAnalytics();
+  }
+  document.getElementById('cookieAccept').addEventListener('click',()=>close('granted'));
+  document.getElementById('cookieDecline').addEventListener('click',()=>close('denied'));
+  if(choice===null){ setTimeout(()=>bar.classList.add('show'),1800); }
+  else { bar.remove(); if(choice==='granted') enableAnalytics(); }
+  function enableAnalytics(){
+    /* === БУДУЩАЯ АНАЛИТИКА: подключать ТОЛЬКО здесь (вызывается лишь при согласии) ===
+       Пример GA4:
+       var s=document.createElement('script');s.async=true;
+       s.src='https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX';document.head.appendChild(s);
+       window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+       gtag('js',new Date());gtag('config','G-XXXXXXX',{anonymize_ip:true});
+    */
+  }
+})();
 
 /* ===== cinematic camera: slow dolly + multi-plane parallax (mouse + scroll) + drifting dust ===== */
 (function(){

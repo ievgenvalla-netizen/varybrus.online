@@ -50,7 +50,7 @@
   html{scroll-behavior:smooth;background:#070708}
   body{
     font-family:'Manrope',system-ui,sans-serif;
-    background:var(--bg);color:var(--text);
+    background:transparent;color:var(--text);
     overflow-x:hidden;line-height:1.5;
     -webkit-font-smoothing:antialiased;
   }
@@ -126,7 +126,7 @@
   /* ---------- header ---------- */
   header{position:fixed;top:0;left:0;right:0;z-index:50;
     transition:background-color .3s ease,border-color .3s ease}
-  header.scrolled{background:#070708;border-bottom:1px solid rgba(255,255,255,.05)}
+  header.scrolled{background:#070708;box-shadow:0 12px 28px rgba(0,0,0,.45)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
   .logo{font-family:'Unbounded';font-weight:800;font-size:18px;letter-spacing:.02em}
   .logo b{color:var(--accent)}

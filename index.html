@@ -78,13 +78,18 @@
   @keyframes fogDrift1{50%{transform:translate(6vw,4vw) scale(1.12)}}
   @keyframes fogDrift2{50%{transform:translate(-5vw,-4vw) scale(1.16)}}
   .rays{position:absolute;top:-30%;left:16%;width:48%;height:172%;transform:rotate(9deg);
-    background:linear-gradient(100deg,transparent 0%,rgba(255,255,255,.05) 46%,rgba(var(--accent-rgb),.045) 56%,transparent 100%);
+    background:linear-gradient(100deg,transparent 0%,rgba(var(--accent-rgb),.06) 46%,rgba(var(--accent-rgb),.045) 56%,transparent 100%);
     filter:blur(36px);opacity:.5;animation:rayBreath 19s ease-in-out infinite}
   @keyframes rayBreath{0%,100%{opacity:.28}50%{opacity:.72}}
   #dust{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.7;will-change:transform}
   @media (prefers-reduced-motion:reduce){
     .fog,.rays,.orb{animation:none}
     #dust{display:none}
+  }
+  /* mobile Safari renders huge blurred/blended layers with white seams while scrolling — drop them there */
+  @media (hover:none),(max-width:900px){
+    .rays{display:none}
+    .fog{filter:blur(60px)}
   }
   .grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
@@ -119,9 +124,10 @@
   }
 
   /* ---------- header ---------- */
-  header{position:fixed;top:0;left:0;right:0;z-index:50;transition:.3s;
-    backdrop-filter:blur(0px)}
-  header.scrolled{background:rgba(7,7,8,.7);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  header{position:fixed;top:0;left:0;right:0;z-index:50;
+    transition:background-color .3s ease,border-color .3s ease}
+  header.scrolled{background:rgba(7,7,8,.85);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
   .logo{font-family:'Unbounded';font-weight:800;font-size:18px;letter-spacing:.02em}
   .logo b{color:var(--accent)}
@@ -756,8 +762,8 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 /* ===== cinematic camera: slow dolly + multi-plane parallax (mouse + scroll) + drifting dust ===== */
 (function(){
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  if(reduce) return;
   const coarse=matchMedia('(pointer:coarse)').matches;
+  if(reduce||coarse) return;              // touch devices: no per-frame transforms of blurred layers (iOS white-seam bug)
   const bg=document.querySelector('.bg-fx');
   const atmos=document.querySelector('.atmos');
   const photoWrap=document.querySelector('.photo-wrap');
